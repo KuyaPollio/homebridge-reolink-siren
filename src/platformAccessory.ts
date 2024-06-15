@@ -6,9 +6,7 @@ import { CameraConfig, sirenToggle } from './reolink';
 export class ReolinkExtraAccessory {
   private sirenService: Service;
   private cameraConfig: CameraConfig;
-
-
-   constructor(
+  constructor(
     private readonly platform: ReolinkExtrasHomebridgePlatform,
     private readonly accessory: PlatformAccessory,
   ) {

@@ -1,15 +1,18 @@
 {
   "displayName": "Reolink Siren",
-  "name": "@Woodsnaps/homebridge-reolink-siren",
-  "version": "1.0.0",
+  "name": "@woodsnaps/homebridge-reolink-siren",
+  "version": "1.0.1",
+  "publishConfig": {
+    "access": "public"
+  },
   "description": "Control alarm of Reolink cameras.",
-  "license": "Apache-2.0",
+  "license": "ISC",
   "repository": {
     "type": "git",
     "url": "https://github.com/woodsnaps/homebridge-reolink-siren.git"
   },
   "bugs": {
-    "url": "https://github.com/woodsnaps/homebridge-reolink-siren/issues"
+    "url": "https://github.com/Woodsnaps/homebridge-reolink-siren/issues"
   },
   "engines": {
     "node": "^20.14.0",
@@ -29,16 +32,11 @@
     "homebridge"
   ],
   "author": "Your Name",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Woodsnaps/homebridge-reolink-siren/issues"
-  },
   "homepage": "https://github.com/Woodsnaps/homebridge-reolink-siren#readme",
-  "dependencies": {},
   "devDependencies": {
     "@types/node": "^18.16.20",
     "@typescript-eslint/eslint-plugin": "^5.62.0",
-    "@typescript-eslint/parser": "^5.62.0",
+    "@typescript-eslint/parser": "^7.13.0",
     "eslint": "^8.45.0",
     "homebridge": "^1.6.0",
     "homebridge-config-ui-x": "4.50.5",

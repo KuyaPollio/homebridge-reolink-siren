@@ -13,9 +13,21 @@ enum Command {
 
 const tokens: Map<string, string> = new Map();
 
-const apiRequest = async (config: CameraConfig, cmd: Command, data: object): Promise<any> => {
+interface ApiResponse {
+  code?: number;
+  error?: {
+    detail: string;
+  };
+  value?: {
+    Token?: {
+      name: string;
+    };
+  };
+  // Add other fields based on your API response structure
+}
+
+const apiRequest = async (config: CameraConfig, cmd: Command, data: object): Promise<ApiResponse[]> => {
   const currentToken = tokens.get(config.ip);
-  // @ts-expect-error aaq
   const response = await fetch(`http://${config.ip}/cgi-bin/api.cgi?cmd=${cmd}${currentToken ? `&token=${currentToken}` : ''}`, {
     method: 'POST',
     headers: {
@@ -24,7 +36,7 @@ const apiRequest = async (config: CameraConfig, cmd: Command, data: object): Pro
     body: JSON.stringify([data]),
   });
 
-  const jsonResponse = await response.json() as any;
+  const jsonResponse: ApiResponse[] = await response.json();
 
   if (jsonResponse[0]?.code === 1 && jsonResponse[0]?.error?.detail === 'please login first') {
     await login(config);
