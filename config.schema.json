@@ -37,15 +37,16 @@
               "placeholder": "Enter camera password...",
               "required": true
             },
-            "exposeLightToHomeKit": {
-              "title": "Expose Light to HomeKit",
-              "type": "boolean",
-              "default": false
-            },
             "exposeSirenToHomeKit": {
               "title": "Expose Siren to HomeKit",
               "type": "boolean",
               "default": false
+            },
+            "exposeLightToHomeKit": {
+              "title": "Expose Light to HomeKit",
+              "type": "boolean",
+              "default": false,
+              "description": "If you make any changes to this, please remove the Childbridge from Homekit and re-add it"
             }
           }
         }
