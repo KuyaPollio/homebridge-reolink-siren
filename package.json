@@ -1,7 +1,7 @@
 {
   "displayName": "Reolink Siren & Light",
-  "name": "@woodsnaps/homebridge-reolink-siren",
-  "version": "1.1.24",
+  "name": "homebridge-reolink-siren-and-light",
+  "version": "1.1.25",
   "publishConfig": {
     "access": "public"
   },
