@@ -21,25 +21,8 @@ enum Command {
 }
 
 const tokens: Map<string, string> = new Map();
-
-interface ApiResponse {
-  code?: number;
-  error?: {
-    detail: string;
-  };
-  value?: {
-    Token?: {
-      name: string;
-    };
-    WhiteLed?: {
-      state: number;
-      bright: number;
-    };
-    // Add other fields based on your API response structure
-  };
-}
-
-const apiRequest = async (config: CameraConfig, cmd: Command, data: object): Promise<ApiResponse[]> => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const apiRequest = async (config: CameraConfig, cmd: Command, data: object): Promise<any> => {
   const currentToken = tokens.get(config.ip);
   const response = await fetch(`http://${config.ip}/cgi-bin/api.cgi?cmd=${cmd}${currentToken ? `&token=${currentToken}` : ''}`, {
     method: 'POST',
@@ -49,7 +32,7 @@ const apiRequest = async (config: CameraConfig, cmd: Command, data: object): Pro
     body: JSON.stringify([data]),
   });
 
-  const jsonResponse: ApiResponse[] = await response.json();
+  const jsonResponse = await response.json() as any;
 
   if (jsonResponse[0]?.code === 1 && jsonResponse[0]?.error?.detail === 'please login first') {
     await login(config);
@@ -59,7 +42,7 @@ const apiRequest = async (config: CameraConfig, cmd: Command, data: object): Pro
   return jsonResponse;
 };
 
-const login = async (config: CameraConfig): Promise<void> => {
+const login = async (config: CameraConfig) => {
   const data = {
     cmd: Command.Login,
     param: {
@@ -80,7 +63,7 @@ const login = async (config: CameraConfig): Promise<void> => {
   await sleep(1000);
 };
 
-const getWhiteLed = async (config: CameraConfig): Promise<LightState | undefined> => {
+const getWhiteLed = async (config: CameraConfig): Promise<LightState> => {
   const data = {
     cmd: Command.GetWhiteLed,
     action: 0,
@@ -91,18 +74,11 @@ const getWhiteLed = async (config: CameraConfig): Promise<LightState | undefined
 
   const result = await apiRequest(config, Command.GetWhiteLed, data);
 
-  if (result && result[0]?.value && 'WhiteLed' in result[0].value) {
-    const value = result[0].value as { WhiteLed: { state: number; bright: number } };
-    return {
-      isOn: value.WhiteLed.state !== 0,
-      brightLevel: value.WhiteLed.bright,
-    };
-  } else {
-    return undefined;
-  }
+  return { isOn: result[0].value.WhiteLed.state !== 0, brightLevel: result[0].value.WhiteLed.bright };
 };
 
-const setWhiteLed = async (config: CameraConfig, state: number, bright: number): Promise<void> => {
+const setWhiteLed = async (config: CameraConfig, state: number, bright: number) => {
+  // There is not way to turn on without a mode like manual mode, so we have to set to timer with one minute to turn off
   const data = {
     cmd: Command.SetWhiteLed,
     param: {
@@ -121,10 +97,10 @@ const setWhiteLed = async (config: CameraConfig, state: number, bright: number):
     },
   } as const;
 
-  await apiRequest(config, Command.SetWhiteLed, data);
+  return apiRequest(config, Command.SetWhiteLed, data);
 };
 
-const sirenToggle = async (config: CameraConfig, start: boolean): Promise<void> => {
+const sirenToggle = async (config: CameraConfig, start: boolean) => {
   const data = {
     cmd: Command.AudioAlarmPlay,
     action: 0,
@@ -136,9 +112,9 @@ const sirenToggle = async (config: CameraConfig, start: boolean): Promise<void> 
     },
   } as const;
 
-  await apiRequest(config, Command.AudioAlarmPlay, data);
+  return apiRequest(config, Command.AudioAlarmPlay, data);
 };
 
 export {
-  CameraConfig, LightState, Command, apiRequest, login, getWhiteLed, setWhiteLed, sirenToggle,
+  CameraConfig, LightState, Command, getWhiteLed, apiRequest, login, setWhiteLed, sirenToggle,
 };

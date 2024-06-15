@@ -40,12 +40,12 @@
             "exposeLightToHomeKit": {
               "title": "Expose Light to HomeKit",
               "type": "boolean",
-              "default": true
+              "default": false
             },
             "exposeSirenToHomeKit": {
               "title": "Expose Siren to HomeKit",
               "type": "boolean",
-              "default": true
+              "default": false
             }
           }
         }

@@ -1,7 +1,7 @@
 {
   "displayName": "Reolink Siren",
   "name": "@woodsnaps/homebridge-reolink-siren",
-  "version": "1.1.7",
+  "version": "1.1.20",
   "publishConfig": {
     "access": "public"
   },
