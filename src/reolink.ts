@@ -6,15 +6,8 @@ type CameraConfig = {
   password: string;
 };
 
-type LightState = {
-  isOn: boolean;
-  brightLevel: number;
-};
-
 enum Command {
   Login = 'Login',
-  GetWhiteLed = 'GetWhiteLed',
-  SetWhiteLed = 'SetWhiteLed',
   AudioAlarmPlay = 'AudioAlarmPlay'
 }
 
@@ -62,43 +55,6 @@ const login = async (config: CameraConfig) => {
   await sleep(1000);
 };
 
-const getWhiteLed = async (config: CameraConfig): Promise<LightState> => {
-  const data = {
-    cmd: Command.GetWhiteLed,
-    action: 0,
-    param: {
-      channel: 0,
-    },
-  } as const;
-
-  const result = await apiRequest(config, Command.GetWhiteLed, data);
-
-  return { isOn: result[0].value.WhiteLed.state !== 0, brightLevel: result[0].value.WhiteLed.bright };
-};
-
-const setWhiteLed = async (config: CameraConfig, state: number, bright: number) => {
-  // There is not way to turn on without a mode like manual mode, so we have to set to timer with one minute to turn off
-  const data = {
-    cmd: Command.SetWhiteLed,
-    param: {
-      WhiteLed: {
-        state,
-        channel: 0,
-        mode: state === 1 ? 3 : 1,
-        bright,
-        LightingSchedule: {
-          EndHour: 8,
-          EndMin: 58,
-          StartHour: 9,
-          StartMin: 0,
-        },
-      },
-    },
-  } as const;
-
-  return apiRequest(config, Command.SetWhiteLed, data);
-};
-
 const sirenToggle = async (config: CameraConfig, start: boolean) => {
   const data = {
     cmd: Command.AudioAlarmPlay,
@@ -115,5 +71,5 @@ const sirenToggle = async (config: CameraConfig, start: boolean) => {
 };
 
 export {
-  CameraConfig, LightState, Command, getWhiteLed, apiRequest, login, setWhiteLed, sirenToggle,
+  CameraConfig, Command, apiRequest, login, sirenToggle,
 };

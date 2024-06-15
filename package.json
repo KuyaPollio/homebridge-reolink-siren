@@ -1,18 +1,18 @@
 {
-  "displayName": "Reolink Extras",
-  "name": "homebridge-reolink-extras",
+  "displayName": "Reolink Siren",
+  "name": "@Woodsnaps/homebridge-reolink-siren",
   "version": "1.0.0",
-  "description": "Control light and alarm of reolink cameras.",
+  "description": "Control alarm of Reolink cameras.",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/felipefdl/homebridge-reolink-extras.git"
+    "url": "https://github.com/woodsnaps/homebridge-reolink-siren.git"
   },
   "bugs": {
-    "url": "https://github.com/felipefdl/homebridge-reolink-extras/issues"
+    "url": "https://github.com/woodsnaps/homebridge-reolink-siren/issues"
   },
   "engines": {
-    "node": "^18.17.0",
+    "node": "^20.14.0",
     "homebridge": "^1.6.0"
   },
   "main": "dist/index.js",

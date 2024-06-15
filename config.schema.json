@@ -1,5 +1,5 @@
 {
-  "pluginAlias": "ReolinkExtras",
+  "pluginAlias": "ReolinkSiren",
   "pluginType": "platform",
   "singular": true,
   "schema": {
