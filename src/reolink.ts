@@ -4,29 +4,25 @@ type CameraConfig = {
   ip: string;
   user: string;
   password: string;
+  exposeLightToHomeKit: boolean;
+  exposeSirenToHomeKit: boolean;
+};
+
+type LightState = {
+  isOn: boolean;
+  brightLevel: number;
 };
 
 enum Command {
   Login = 'Login',
+  GetWhiteLed = 'GetWhiteLed',
+  SetWhiteLed = 'SetWhiteLed',
   AudioAlarmPlay = 'AudioAlarmPlay'
 }
 
 const tokens: Map<string, string> = new Map();
-
-interface ApiResponse {
-  code?: number;
-  error?: {
-    detail: string;
-  };
-  value?: {
-    Token?: {
-      name: string;
-    };
-  };
-  // Add other fields based on your API response structure
-}
-
-const apiRequest = async (config: CameraConfig, cmd: Command, data: object): Promise<ApiResponse[]> => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const apiRequest = async (config: CameraConfig, cmd: Command, data: object): Promise<any> => {
   const currentToken = tokens.get(config.ip);
   const response = await fetch(`http://${config.ip}/cgi-bin/api.cgi?cmd=${cmd}${currentToken ? `&token=${currentToken}` : ''}`, {
     method: 'POST',
@@ -36,7 +32,7 @@ const apiRequest = async (config: CameraConfig, cmd: Command, data: object): Pro
     body: JSON.stringify([data]),
   });
 
-  const jsonResponse: ApiResponse[] = await response.json();
+  const jsonResponse = await response.json() as any;
 
   if (jsonResponse[0]?.code === 1 && jsonResponse[0]?.error?.detail === 'please login first') {
     await login(config);
@@ -67,6 +63,43 @@ const login = async (config: CameraConfig) => {
   await sleep(1000);
 };
 
+const getWhiteLed = async (config: CameraConfig): Promise<LightState> => {
+  const data = {
+    cmd: Command.GetWhiteLed,
+    action: 0,
+    param: {
+      channel: 0,
+    },
+  } as const;
+
+  const result = await apiRequest(config, Command.GetWhiteLed, data);
+
+  return { isOn: result[0].value.WhiteLed.state !== 0, brightLevel: result[0].value.WhiteLed.bright };
+};
+
+const setWhiteLed = async (config: CameraConfig, state: number, bright: number) => {
+  // There is not way to turn on without a mode like manual mode, so we have to set to timer with one minute to turn off
+  const data = {
+    cmd: Command.SetWhiteLed,
+    param: {
+      WhiteLed: {
+        state,
+        channel: 0,
+        mode: state === 1 ? 3 : 1,
+        bright,
+        LightingSchedule: {
+          EndHour: 8,
+          EndMin: 58,
+          StartHour: 9,
+          StartMin: 0,
+        },
+      },
+    },
+  } as const;
+
+  return apiRequest(config, Command.SetWhiteLed, data);
+};
+
 const sirenToggle = async (config: CameraConfig, start: boolean) => {
   const data = {
     cmd: Command.AudioAlarmPlay,
@@ -83,5 +116,5 @@ const sirenToggle = async (config: CameraConfig, start: boolean) => {
 };
 
 export {
-  CameraConfig, Command, apiRequest, login, sirenToggle,
+  CameraConfig, LightState, Command, getWhiteLed, apiRequest, login, setWhiteLed, sirenToggle,
 };

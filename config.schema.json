@@ -1,5 +1,5 @@
 {
-  "pluginAlias": "ReolinkSiren",
+  "pluginAlias": "ReolinkExtras",
   "pluginType": "platform",
   "singular": true,
   "schema": {
@@ -25,17 +25,28 @@
               "required": true
             },
             "user": {
-              "title": "user",
+              "title": "User",
               "type": "string",
               "default": "admin",
               "placeholder": "Enter camera user...",
               "required": true
             },
             "password": {
-              "title": "password",
+              "title": "Password",
               "type": "string",
               "placeholder": "Enter camera password...",
               "required": true
+            },
+            "exposeSirenToHomeKit": {
+              "title": "Expose Siren to HomeKit",
+              "type": "boolean",
+              "default": false
+            },
+            "exposeLightToHomeKit": {
+              "title": "Expose Light to HomeKit",
+              "type": "boolean",
+              "default": false,
+              "description": "If you make any changes to this, please remove the Childbridge from Homekit and re-add it"
             }
           }
         }
