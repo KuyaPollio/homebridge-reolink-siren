@@ -23,8 +23,17 @@
     "prepublishOnly": "npm run lint && npm run build"
   },
   "keywords": [
-    "homebridge-plugin"
+    "homebridge-plugin",
+    "reolink",
+    "siren",
+    "homebridge"
   ],
+  "author": "Your Name",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Woodsnaps/homebridge-reolink-siren/issues"
+  },
+  "homepage": "https://github.com/Woodsnaps/homebridge-reolink-siren#readme",
   "dependencies": {},
   "devDependencies": {
     "@types/node": "^18.16.20",
