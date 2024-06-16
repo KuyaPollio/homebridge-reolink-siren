@@ -10,6 +10,7 @@ export class ReolinkExtraAccessory {
     isOn: false,
     brightLevel: 100,
   };
+
   private hasCalledGetLightStatusBackground = false;
 
   constructor(
@@ -20,9 +21,9 @@ export class ReolinkExtraAccessory {
 
     // set accessory information
     this.accessory.getService(this.platform.Service.AccessoryInformation)!
-        .setCharacteristic(this.platform.Characteristic.Manufacturer, 'Default-Manufacturer')
-        .setCharacteristic(this.platform.Characteristic.Model, 'Default-Model')
-        .setCharacteristic(this.platform.Characteristic.SerialNumber, 'Default-Serial');
+      .setCharacteristic(this.platform.Characteristic.Manufacturer, 'Woodsnaps')
+      .setCharacteristic(this.platform.Characteristic.Model, 'Default-Model')
+      .setCharacteristic(this.platform.Characteristic.SerialNumber, 'Default-Serial');
 
     // Initialize Light Service if enabled in config
     if (this.cameraConfig.exposeLightToHomeKit) {
@@ -31,11 +32,11 @@ export class ReolinkExtraAccessory {
       this.lightService.setCharacteristic(this.platform.Characteristic.Name, `${accessory.context.device.name} Light`);
 
       this.lightService.getCharacteristic(this.platform.Characteristic.On)
-          .onSet(this.setLightOn.bind(this))
-          .onGet(this.getLightStatus.bind(this));
+        .onSet(this.setLightOn.bind(this))
+        .onGet(this.getLightStatus.bind(this));
 
       this.lightService.getCharacteristic(this.platform.Characteristic.Brightness)
-          .onSet(this.setBrightness.bind(this));
+        .onSet(this.setBrightness.bind(this));
     }
 
     // Initialize Siren Service if enabled in config
@@ -44,7 +45,7 @@ export class ReolinkExtraAccessory {
           this.accessory.addService(this.platform.Service.Switch, 'Siren');
       this.sirenService.setCharacteristic(this.platform.Characteristic.Name, `${accessory.context.device.name} Siren`);
       this.sirenService.getCharacteristic(this.platform.Characteristic.On)
-          .onSet(this.setSirenOn.bind(this));
+        .onSet(this.setSirenOn.bind(this));
     }
 
     this.platform.log.debug('Finished initializing accessory:', accessory.displayName);
@@ -97,8 +98,8 @@ export class ReolinkExtraAccessory {
 
     if (this.lightService) {
       this.lightService
-          .updateCharacteristic(this.platform.Characteristic.On, statusLed.isOn)
-          .updateCharacteristic(this.platform.Characteristic.Brightness, statusLed.brightLevel);
+        .updateCharacteristic(this.platform.Characteristic.On, statusLed.isOn)
+        .updateCharacteristic(this.platform.Characteristic.Brightness, statusLed.brightLevel);
     }
   }
 
