@@ -10,6 +10,7 @@
         "items": {
           "title": "Camera",
           "type": "object",
+          "description": "WARNING: If you make any changes to a config AFTER you connected your bridge to Homekit, please remove the Childbridge from Homekit and re-add it, otherwise the changes will not take effect",
           "properties": {
             "name": {
               "title": "Name",
@@ -45,8 +46,7 @@
             "exposeLightToHomeKit": {
               "title": "Expose Light to HomeKit",
               "type": "boolean",
-              "default": false,
-              "description": "If you make any changes to this, please remove the Childbridge from Homekit and re-add it"
+              "default": false
             }
           }
         }

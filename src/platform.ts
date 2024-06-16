@@ -1,9 +1,9 @@
 import { API, DynamicPlatformPlugin, Logger, PlatformAccessory, PlatformConfig, Service, Characteristic } from 'homebridge';
 import { PLATFORM_NAME, PLUGIN_NAME } from './settings';
-import { ReolinkExtraAccessory } from './platformAccessory';
+import { ReolinkSirenAndLightAccessory } from './platformAccessory';
 import { CameraConfig } from './reolink';
 
-export class ReolinkExtrasHomebridgePlatform implements DynamicPlatformPlugin {
+export class ReolinkSirenAndLightHomebridgePlatform implements DynamicPlatformPlugin {
   public readonly Service: typeof Service = this.api.hap.Service;
   public readonly Characteristic: typeof Characteristic = this.api.hap.Characteristic;
 
@@ -43,7 +43,7 @@ export class ReolinkExtrasHomebridgePlatform implements DynamicPlatformPlugin {
 
       if (existingAccessory) {
         this.log.info('Restoring existing accessory from cache:', existingAccessory.displayName);
-        new ReolinkExtraAccessory(this, existingAccessory);
+        new ReolinkSirenAndLightAccessory(this, existingAccessory);
       } else {
         this.log.info('Adding new accessory:', device.name);
 
@@ -53,7 +53,7 @@ export class ReolinkExtrasHomebridgePlatform implements DynamicPlatformPlugin {
         const accessory = new this.api.platformAccessory(displayName, uuid);
         accessory.context.device = device as CameraConfig;
 
-        new ReolinkExtraAccessory(this, accessory);
+        new ReolinkSirenAndLightAccessory(this, accessory);
 
         this.api.registerPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [accessory]);
       }

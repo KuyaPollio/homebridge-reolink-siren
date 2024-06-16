@@ -1,11 +1,11 @@
 import { API } from 'homebridge';
 
 import { PLATFORM_NAME } from './settings';
-import { ReolinkExtrasHomebridgePlatform } from './platform';
+import { ReolinkSirenAndLightHomebridgePlatform } from './platform';
 
 /**
  * This method registers the platform with Homebridge
  */
 export = (api: API) => {
-  api.registerPlatform(PLATFORM_NAME, ReolinkExtrasHomebridgePlatform);
+  api.registerPlatform(PLATFORM_NAME, ReolinkSirenAndLightHomebridgePlatform);
 };

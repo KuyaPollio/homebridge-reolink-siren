@@ -1,8 +1,8 @@
 import { Service, PlatformAccessory, CharacteristicValue } from 'homebridge';
-import { ReolinkExtrasHomebridgePlatform } from './platform';
+import { ReolinkSirenAndLightHomebridgePlatform } from './platform';
 import { CameraConfig, LightState, getWhiteLed, setWhiteLed, sirenToggle } from './reolink';
 
-export class ReolinkExtraAccessory {
+export class ReolinkSirenAndLightAccessory {
   private lightService?: Service;
   private sirenService?: Service;
   private cameraConfig: CameraConfig;
@@ -14,7 +14,7 @@ export class ReolinkExtraAccessory {
   private hasCalledGetLightStatusBackground = false;
 
   constructor(
-      private readonly platform: ReolinkExtrasHomebridgePlatform,
+      private readonly platform: ReolinkSirenAndLightHomebridgePlatform,
       private readonly accessory: PlatformAccessory,
   ) {
     this.cameraConfig = this.accessory.context.device;
