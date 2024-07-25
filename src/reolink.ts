@@ -6,6 +6,7 @@ type CameraConfig = {
   password: string;
   exposeLightToHomeKit: boolean;
   exposeSirenToHomeKit: boolean;
+  channel: number;
 };
 
 type LightState = {
@@ -68,7 +69,7 @@ const getWhiteLed = async (config: CameraConfig): Promise<LightState> => {
     cmd: Command.GetWhiteLed,
     action: 0,
     param: {
-      channel: 0,
+      channel: config.channel,
     },
   } as const;
 
@@ -84,7 +85,7 @@ const setWhiteLed = async (config: CameraConfig, state: number, bright: number) 
     param: {
       WhiteLed: {
         state,
-        channel: 0,
+        channel: config.channel,
         mode: state === 1 ? 3 : 1,
         bright,
         LightingSchedule: {
@@ -108,7 +109,7 @@ const sirenToggle = async (config: CameraConfig, start: boolean) => {
       alarm_mode: 'manul',
       manual_switch: start ? 1 : 0,
       times: 1,
-      channel: 0,
+      channel: config.channel,
     },
   } as const;
 

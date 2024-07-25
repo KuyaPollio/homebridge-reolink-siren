@@ -38,6 +38,11 @@
               "placeholder": "Enter camera password...",
               "required": true
             },
+            "Camera Channel": {
+              "title": "Channel of the camera",
+              "type": "number",
+              "default": 0
+            },
             "exposeSirenToHomeKit": {
               "title": "Expose Siren to HomeKit",
               "type": "boolean",
