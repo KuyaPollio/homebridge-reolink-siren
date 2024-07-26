@@ -1,10 +1,11 @@
 
 <span align="center">
 
-# Reolink Siren and Light
+# Reolink Siren and Light through NVR
 
 </span>
 
+<h2> Fork that add the possibility to use NVR configuration and camera channel definition.</h2>
 I've created this plugin so that you can individually turn on and off the Siren and Lights for your Reolink cameras
 Currently, the only user-unfriendly thing I haven't been manage to fix is after you set up a device, you can not use the checkboxes to have the light or siren individually removed.
 To resolve this issue, you have to check or uncheck the box you would like to adjust and then remove the Childbridge from your home.
