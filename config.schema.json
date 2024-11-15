@@ -38,7 +38,7 @@
               "placeholder": "Enter camera password...",
               "required": true
             },
-            "Camera Channel": {
+            "channel": {
               "title": "Channel of the camera",
               "type": "number",
               "default": 0

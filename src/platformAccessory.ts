@@ -21,7 +21,7 @@ export class ReolinkSirenAndLightAccessory {
 
     // set accessory information
     this.accessory.getService(this.platform.Service.AccessoryInformation)!
-      .setCharacteristic(this.platform.Characteristic.Manufacturer, 'Woodsnaps')
+      .setCharacteristic(this.platform.Characteristic.Manufacturer, 'Reolink')
       .setCharacteristic(this.platform.Characteristic.Model, 'Default-Model')
       .setCharacteristic(this.platform.Characteristic.SerialNumber, 'Default-Serial');
 
@@ -53,12 +53,14 @@ export class ReolinkSirenAndLightAccessory {
 
   async setSirenOn(value: CharacteristicValue) {
     const sirenState = value === true;
-
+    this.platform.log.info('Siren:'+ this.cameraConfig);
     await sirenToggle(this.cameraConfig, sirenState).catch(x => {
       this.platform.log.error(x);
       throw new this.platform.api.hap.HapStatusError(this.platform.api.hap.HAPStatus.SERVICE_COMMUNICATION_FAILURE);
+    }).then((response) => {
+      this.platform.log.info('Alarm set to camera');
+      this.platform.log.info(response);
     });
-
     this.platform.log.debug('Siren:', sirenState);
   }
 
@@ -70,6 +72,7 @@ export class ReolinkSirenAndLightAccessory {
       this.platform.log.error(x);
       throw new this.platform.api.hap.HapStatusError(this.platform.api.hap.HAPStatus.SERVICE_COMMUNICATION_FAILURE);
     });
+
   }
 
   async getLightStatus(): Promise<CharacteristicValue> {
