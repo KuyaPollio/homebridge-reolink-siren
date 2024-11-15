@@ -1,3 +1,5 @@
+import { log } from 'console';
+
 const sleep = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 type CameraConfig = {
@@ -6,6 +8,7 @@ type CameraConfig = {
   password: string;
   exposeLightToHomeKit: boolean;
   exposeSirenToHomeKit: boolean;
+  channel: number;
 };
 
 type LightState = {
@@ -53,14 +56,11 @@ const login = async (config: CameraConfig) => {
       },
     },
   } as const;
-
   const response = await apiRequest(config, Command.Login, data);
   const newToken = response[0]?.value?.Token?.name || null;
   if (newToken) {
     tokens.set(config.ip, newToken);
   }
-
-  await sleep(1000);
 };
 
 const getWhiteLed = async (config: CameraConfig): Promise<LightState> => {
@@ -68,7 +68,7 @@ const getWhiteLed = async (config: CameraConfig): Promise<LightState> => {
     cmd: Command.GetWhiteLed,
     action: 0,
     param: {
-      channel: 0,
+      channel: config.channel,
     },
   } as const;
 
@@ -84,14 +84,20 @@ const setWhiteLed = async (config: CameraConfig, state: number, bright: number) 
     param: {
       WhiteLed: {
         state,
-        channel: 0,
+        channel: config.channel,
         mode: state === 1 ? 3 : 1,
-        bright,
+        bright: bright,
         LightingSchedule: {
-          EndHour: 8,
-          EndMin: 58,
-          StartHour: 9,
+          EndHour: 23,
+          EndMin: 59,
+          StartHour: 0,
           StartMin: 0,
+        },
+        wlAiDetectType: {
+          dog_cat: state === 1 ? 1 : 0,
+          face: state === 1 ? 1 : 0,
+          people: 1,
+          vehicle: 1,
         },
       },
     },
@@ -108,10 +114,10 @@ const sirenToggle = async (config: CameraConfig, start: boolean) => {
       alarm_mode: 'manul',
       manual_switch: start ? 1 : 0,
       times: 1,
-      channel: 0,
+      channel: config.channel,
     },
   } as const;
-
+  log('sirenToggle', data);
   return apiRequest(config, Command.AudioAlarmPlay, data);
 };
 
