@@ -1,7 +1,7 @@
 
 <span align="center">
 
-# Reolink Siren and Light
+# Reolink Siren and Light through NVR
 
 </span>
 
@@ -13,3 +13,4 @@ After that, add the Childbridge again and you see that if you, for example, unch
 I have written this plugin from a fork of Reolink Extras, because that plugin wouldn't let me turn off the light exposure to Homekit.
 The exposure to Homekit from my Duo-camera caused an issue in the Reolink app where the "Night Smart Mode" would be turned on again after being "Off" when using the light via Homekit.
 If you turn off the light here, it will not mess with your settings in the Reolink app anymore.
+
