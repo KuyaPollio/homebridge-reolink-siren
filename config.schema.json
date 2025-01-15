@@ -5,6 +5,11 @@
   "schema": {
     "type": "object",
     "properties": {
+      "name": {
+        "title": "Reolink Siren & Light through Nvr",
+        "type": "string",
+        "default": "Reolink Siren & Light"
+      },
       "cameras": {
         "type": "array",
         "items": {
