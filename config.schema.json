@@ -48,6 +48,11 @@
               "type": "number",
               "default": 0
             },
+            "time": {
+              "title": "Siren buzzing time in minutes",
+              "type": "number",
+              "default": 1
+            },
             "exposeSirenToHomeKit": {
               "title": "Expose Siren to HomeKit",
               "type": "boolean",

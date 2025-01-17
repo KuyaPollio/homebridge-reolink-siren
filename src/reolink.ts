@@ -9,6 +9,7 @@ type CameraConfig = {
   exposeLightToHomeKit: boolean;
   exposeSirenToHomeKit: boolean;
   channel: number;
+  time: number;
 };
 
 type LightState = {
@@ -113,7 +114,7 @@ const sirenToggle = async (config: CameraConfig, start: boolean) => {
     param: {
       alarm_mode: 'manul',
       manual_switch: start ? 1 : 0,
-      times: 1,
+      times: config.time,
       channel: config.channel,
     },
   } as const;
