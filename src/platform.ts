@@ -36,7 +36,9 @@ export class ReolinkSirenAndLightHomebridgePlatform implements DynamicPlatformPl
 
   discoverDevices() {
     for (const device of this.config.cameras) {
-      const uuid = this.api.hap.uuid.generate(device.ip);
+      // Create a more unique identifier using both IP and name
+      const uniqueIdentifier = `${device.ip}-${device.name}`;
+      const uuid = this.api.hap.uuid.generate(uniqueIdentifier);
       this.uuids.push(uuid);
 
       const existingAccessory = this.accessories.find(accessory => accessory.UUID === uuid);
