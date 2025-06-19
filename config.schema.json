@@ -5,6 +5,12 @@
   "schema": {
     "type": "object",
     "properties": {
+      "name": {
+        "title": "Platform Name",
+        "type": "string",
+        "required": true,
+        "default": "ReolinkSirenAndLight"
+      },
       "cameras": {
         "type": "array",
         "items": {

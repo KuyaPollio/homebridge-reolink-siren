@@ -15,7 +15,7 @@
     "url": "https://github.com/KuyaPollio/homebridge-reolink-siren/issues"
   },
   "engines": {
-    "node": "^20.10.0",
+    "node": ">=20.10.0",
     "homebridge": "^1.8.2"
   },
   "main": "dist/index.js",
