@@ -9,7 +9,7 @@
         "title": "Platform Name",
         "type": "string",
         "required": true,
-        "default": "ReolinkSirenAndLight"
+        "default": "ReolinkSiren"
       },
       "cameras": {
         "type": "array",
